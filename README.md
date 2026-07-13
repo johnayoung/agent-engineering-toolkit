@@ -14,11 +14,13 @@ Each skill's script also runs standalone without Claude Code.
 
 ## Artifacts
 
+<!-- artifacts:start -->
 | Artifact | What it does | Canonical post |
 |---|---|---|
-| [`audit-claude-md`](skills/audit-claude-md/) | Inventories your CLAUDE.md loading tiers — always-loaded vs lazy vs skills, `@` imports expanded, token estimates — then routes every section to the tier that should own it | [How to Structure CLAUDE.md: It's a Loading Policy, Not a Document](https://jyoung.dev/blog/claude-md-context-hierarchy/) |
+| [`audit-claude-md`](skills/audit-claude-md/) | Inventories your CLAUDE.md loading tiers — always-loaded vs lazy vs skills, @imports expanded, token estimates — then routes every section to the tier that should own it | [How to Structure CLAUDE.md: It's a Loading Policy, Not a Document](https://jyoung.dev/blog/claude-md-context-hierarchy/) |
+<!-- artifacts:end -->
 
-Standalone run:
+Each artifact directory carries an `artifact.json` (name, form, canonical post) and a Grounding section citing its sources. Skills with a `scripts/` directory also run standalone, for example:
 
 ```bash
 skills/audit-claude-md/scripts/audit-claude-md.sh [target-dir]

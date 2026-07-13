@@ -1,0 +1,9 @@
+{
+  "name": "audit-claude-md",
+  "form": "skill",
+  "post_slug": "claude-md-context-hierarchy",
+  "post_url": "https://jyoung.dev/blog/claude-md-context-hierarchy/",
+  "post_title": "How to Structure CLAUDE.md: It's a Loading Policy, Not a Document",
+  "description": "Inventories your CLAUDE.md loading tiers — always-loaded vs lazy vs skills, @imports expanded, token estimates — then routes every section to the tier that should own it",
+  "standalone": true
+}
