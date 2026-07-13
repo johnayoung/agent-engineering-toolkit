@@ -1,0 +1,9 @@
+{
+  "name": "verify-agent-pr",
+  "form": "skill",
+  "post_slug": "evaluating-ai-coding-agent-output",
+  "post_url": "https://jyoung.dev/blog/evaluating-ai-coding-agent-output/",
+  "post_title": "How to Verify AI Coding Agent Output: A Reviewer's Framework",
+  "description": "Runs an agent-authored PR through the six-move verification checklist as a fresh grader — evidence over self-report, tests read as claims, spec-forward verification, scope diff, blast-radius depth — with a standalone diff-triage script",
+  "standalone": true
+}

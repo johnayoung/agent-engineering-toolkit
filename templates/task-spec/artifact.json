@@ -1,0 +1,9 @@
+{
+  "name": "task-spec",
+  "form": "template",
+  "post_slug": "anatomy-of-a-perfect-ai-agent-task",
+  "post_url": "https://jyoung.dev/blog/anatomy-of-a-perfect-ai-agent-task/",
+  "post_title": "The Anatomy of a Perfect AI Agent Task",
+  "description": "Copy-paste task-spec skeleton with the post's nine sections (goal, context, constraints, non-goals, acceptance criteria, verification), plus a lint script that fails on missing sections and flags vague acceptance criteria",
+  "standalone": true
+}

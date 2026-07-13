@@ -1,0 +1,9 @@
+{
+  "name": "agent-task-go-no-go",
+  "form": "skill",
+  "post_slug": "what-ai-agents-are-actually-good-for",
+  "post_url": "https://jyoung.dev/blog/what-ai-agents-are-actually-good-for/",
+  "post_title": "What AI Coding Agents Are Actually Good For (And When to Skip)",
+  "description": "Runs a candidate task through the five-gate go/no-go pass — runnable check, human-time estimate, verification cost, verifiable done, blast radius — and returns the delegate/decompose/keep verdict at the first failing gate",
+  "standalone": true
+}

@@ -1,0 +1,9 @@
+{
+  "name": "size-review-capacity",
+  "form": "calculator",
+  "post_slug": "review-capacity-agent-throughput",
+  "post_url": "https://jyoung.dev/blog/review-capacity-agent-throughput/",
+  "post_title": "Review Capacity Is the Real Ceiling on Your Agents",
+  "description": "Turns your reviewer count, focused review-hours, and PR volume into attention-per-PR and a clears/exceeds verdict for the next agent you want to add, with the post's six-gate scorecard as a copy-paste checklist",
+  "standalone": true
+}

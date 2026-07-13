@@ -1,0 +1,9 @@
+{
+  "name": "isolation-gate",
+  "form": "skill",
+  "post_slug": "multi-agent-context-isolation",
+  "post_url": "https://jyoung.dev/blog/multi-agent-context-isolation/",
+  "post_title": "When One Agent Stops Being Enough: The Isolation Gate",
+  "description": "Walks a proposed multi-agent split through the two-gate flowchart — isolation need first, coordination readiness second — and returns a verdict at the first failing gate",
+  "standalone": true
+}

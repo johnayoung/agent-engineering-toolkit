@@ -1,0 +1,9 @@
+{
+  "name": "loop-preflight",
+  "form": "skill",
+  "post_slug": "loop-engineering-breaks-your-playbook",
+  "post_url": "https://jyoung.dev/blog/loop-engineering-breaks-your-playbook/",
+  "post_title": "Loop Engineering Breaks Your Single-Shot Context Playbook",
+  "description": "Preflights an unattended agent loop before you walk away: checks the wrapper for the max-iteration, no-progress, and spend brakes plus externalized state and a non-self-graded check, and prices the always-on context re-paid every iteration",
+  "standalone": true
+}

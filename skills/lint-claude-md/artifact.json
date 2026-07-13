@@ -1,0 +1,9 @@
+{
+  "name": "lint-claude-md",
+  "form": "skill",
+  "post_slug": "claude-md-instruction-ceiling",
+  "post_url": "https://jyoung.dev/blog/claude-md-instruction-ceiling/",
+  "post_title": "CLAUDE.md Instruction Ceiling: Maintained Config, Not a README",
+  "description": "Runs every line of a CLAUDE.md through the post's per-line decision table — instruction-ceiling budget, self-evident/negative/vague/hook-shaped flags, canary probe check — and emits a keep/rewrite/cut/hook verdict report",
+  "standalone": true
+}

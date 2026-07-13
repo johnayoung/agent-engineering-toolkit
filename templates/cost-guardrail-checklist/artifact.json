@@ -1,0 +1,9 @@
+{
+  "name": "cost-guardrail-checklist",
+  "form": "checklist",
+  "post_slug": "per-task-cost-attribution",
+  "post_url": "https://jyoung.dev/blog/per-task-cost-attribution/",
+  "post_title": "You Can't Cap What You Can't Attribute: Per-Task Cost",
+  "description": "Pre-ship checklist for agent spend controls: seven layers, each requiring both an attribution dimension (which task spent) and an enforcement ceiling (what refuses the next call), with a verified LiteLLM per-session config",
+  "standalone": true
+}

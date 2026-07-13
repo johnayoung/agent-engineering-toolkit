@@ -1,0 +1,9 @@
+{
+  "name": "audit-jit-retrieval",
+  "form": "skill",
+  "post_slug": "jit-context-retrieval-failure",
+  "post_url": "https://jyoung.dev/blog/jit-context-retrieval-failure/",
+  "post_title": "Where Just-in-Time Context Retrieval Silently Breaks",
+  "description": "Audits an agent's JIT retrieval surface against the five-row failure ledger — dead references, tool-description routing, empty semantic results, uncapped loops, fallback re-injection — reporting which failures are loud and which are silent; bundles a standalone tool-catalog audit script",
+  "standalone": true
+}

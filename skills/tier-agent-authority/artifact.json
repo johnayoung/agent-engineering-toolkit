@@ -1,0 +1,9 @@
+{
+  "name": "tier-agent-authority",
+  "form": "skill",
+  "post_slug": "agent-permission-tiering",
+  "post_url": "https://jyoung.dev/blog/agent-permission-tiering/",
+  "post_title": "Tier Your AI Agent's Production Authority by Task Risk",
+  "description": "Classifies every action an agent can take — Claude Code permission rules mechanically, ambient credentials by inventory — into four authority tiers by reversibility and blast radius, flags any action holding a control looser than its tier's default, and proposes a measured graduation ledger",
+  "standalone": true
+}
