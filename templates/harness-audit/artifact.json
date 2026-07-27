@@ -1,0 +1,9 @@
+{
+  "name": "harness-audit",
+  "form": "script",
+  "post_slug": "agent-harness-audit",
+  "post_url": "https://jyoung.dev/blog/agent-harness-audit/",
+  "post_title": "Audit Your Agent Harness: The Deterministic Layer Nobody Reviews",
+  "description": "Read-only scan that answers the post's seven harness questions against a repo plus your user-scope config — permission rules by scope, the three enforcement buckets, sandbox keys including excludedCommands, registered hooks with their exit-1 fail-open paths, telemetry switches, and runtime version — marking every control DEFAULT, SET, or UNDETERMINED without grading any of them",
+  "standalone": true
+}
