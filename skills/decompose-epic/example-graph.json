@@ -1,0 +1,77 @@
+{
+  "epic": "Add tenant-scoped rate limiting to the public API",
+  "owner": "the engineer accountable for this feature's design review",
+  "failure_rate_evidence": "ran monolithic twice; both attempts got tenant identification wrong on partly unauthenticated routes and needed a full rerun",
+  "note": "The worked example from https://jyoung.dev/blog/task-decomposition-for-ai-coding-agents/. The post's table states n3's and n4's done conditions in prose ('the screen renders it', 'matches byte for byte'); they are written here as runnable predicates, which is what the accept schema forces.",
+  "nodes": [
+    {
+      "id": "n1",
+      "layer": "schema",
+      "writes": ["migrations/0042_tenant_rate_limits.sql"],
+      "owns": ["tenant_rate_limits table shape"],
+      "reads": [],
+      "depends": [],
+      "accept": {
+        "kind": "command",
+        "run": "migrate up && migrate down"
+      }
+    },
+    {
+      "id": "n2",
+      "layer": "middleware",
+      "writes": [
+        "internal/middleware/ratelimit.go",
+        "internal/ratelimit/policy.go"
+      ],
+      "owns": ["RateLimitPolicy"],
+      "reads": ["tenant_rate_limits table shape"],
+      "depends": ["n1"],
+      "accept": [
+        {
+          "kind": "command",
+          "run": "go test ./internal/middleware/... ./internal/ratelimit/..."
+        },
+        {
+          "kind": "test",
+          "name": "TestRequest101InOneHundredPerMinuteWindowReturns429",
+          "run": "go test ./internal/middleware -run TestRequest101InOneHundredPerMinuteWindowReturns429"
+        }
+      ]
+    },
+    {
+      "id": "n3",
+      "layer": "admin-ui",
+      "writes": [
+        "web/admin/src/settings/**",
+        "internal/admin/ratelimit_handler.go"
+      ],
+      "owns": [],
+      "reads": ["RateLimitPolicy"],
+      "depends": ["n1", "n2"],
+      "accept": [
+        {
+          "kind": "test",
+          "name": "TestAdminRateLimitsReturnsEveryTenantPolicy",
+          "run": "go test ./internal/admin -run TestAdminRateLimitsReturnsEveryTenantPolicy"
+        },
+        {
+          "kind": "test",
+          "name": "RateLimits screen renders a row per policy",
+          "run": "npm test --prefix web/admin -- RateLimits"
+        }
+      ]
+    },
+    {
+      "id": "n4",
+      "layer": "docs",
+      "writes": ["docs/api/rate-limits.md"],
+      "owns": [],
+      "reads": ["RateLimitPolicy"],
+      "depends": ["n2"],
+      "accept": {
+        "kind": "command",
+        "run": "diff <(sed -n '/```json/,/```/p' docs/api/rate-limits.md | sed '1d;$d') internal/middleware/testdata/429_response.json"
+      }
+    }
+  ]
+}

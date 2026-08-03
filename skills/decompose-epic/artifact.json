@@ -1,0 +1,9 @@
+{
+  "name": "decompose-epic",
+  "form": "skill",
+  "post_slug": "task-decomposition-for-ai-coding-agents",
+  "post_url": "https://jyoung.dev/blog/task-decomposition-for-ai-coding-agents/",
+  "post_title": "Task Decomposition for AI Coding Agents: Draw the Graph First",
+  "description": "Converts one epic into a task graph whose nodes each carry an exclusively owned write glob, a single-owner interface contract, explicit acyclic edges, and a mechanical acceptance predicate — with a standalone checker that tests the globs against the real repo for overlap, contracts for two owners or none, edges for cycles, and acceptance criteria for prose, and calls a one-node graph what it is: run it monolithic",
+  "standalone": true
+}
