@@ -1,0 +1,9 @@
+{
+  "name": "model-swap-gate",
+  "form": "checklist",
+  "post_slug": "coding-agent-leaderboard-noise",
+  "post_url": "https://jyoung.dev/blog/coding-agent-leaderboard-noise/",
+  "post_title": "Stop Picking Your Coding-Agent Model Off a Leaderboard",
+  "description": "Decision checklist for coding-agent model swaps: error-analysis entry condition plus five gates (noise floor, instrument validity, harness parity, workload-weighted eval, staged rollout), each with a pass/fail predicate and the published measurement behind it",
+  "standalone": true
+}
