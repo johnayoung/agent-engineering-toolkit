@@ -1,0 +1,9 @@
+{
+  "name": "edge-justification-worksheet",
+  "form": "template",
+  "post_slug": "agent-architecture-review-capacity",
+  "post_url": "https://jyoung.dev/blog/agent-architecture-review-capacity/",
+  "post_title": "The Topology You Can Review Is the Topology You Can Run",
+  "description": "Per-edge worksheet that forces every proposed agent-to-agent edge to name its forcing constraint (context pollution, parallelism, or specialization), its risk tier, its four-field delegation spec, its review node, and both bills — token and reviewer-minute — with a checker that deletes any edge holding an empty or invalid cell",
+  "standalone": true
+}
