@@ -1,0 +1,9 @@
+{
+  "name": "harness-portability-audit",
+  "form": "script",
+  "post_slug": "switching-between-ai-coding-agents",
+  "post_url": "https://jyoung.dev/blog/switching-between-ai-coding-agents/",
+  "post_title": "AGENTS.md vs CLAUDE.md: Swap the Agent, Keep the Harness",
+  "description": "Read-only scan that prints the post's portability ledger for one repo: every harness artifact across Claude Code, Codex CLI, Gemini CLI and Cursor (instruction files, skills, slash commands, MCP client files, hooks, permissions, subagents, worktrees, dev container) sorted into PORTS or VENDOR-BOUND, with the documented bridge named where one is missing (no @AGENTS.md import, context.fileName unset, non-spec SKILL.md keys, .mcp.json url without type, hooks or permissions declared for one vendor only)",
+  "standalone": true
+}
