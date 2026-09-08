@@ -1,0 +1,9 @@
+{
+  "name": "trace-field-survivability-audit",
+  "form": "script",
+  "post_slug": "agent-observability-trace-schema",
+  "post_url": "https://jyoung.dev/blog/agent-observability-trace-schema/",
+  "post_title": "Rank Your Agent Trace Fields by What You Can Never Get Back",
+  "description": "Read-only field-presence audit against exported OpenTelemetry GenAI or OpenInference span JSON (array, JSON-Lines, or full OTLP export): flags every LLM-shaped span missing the post's four unrecoverable fields, decision content, resolved response model versus request-model-only, pinned prompt version or content, and the model's retirement date, and exits non-zero so it can gate CI the way the post's closing instruction asks for",
+  "standalone": true
+}
