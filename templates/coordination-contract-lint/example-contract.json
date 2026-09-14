@@ -1,0 +1,26 @@
+{
+  "task": "webhook-retry",
+  "objective": "Retry failed webhook deliveries with exponential backoff",
+  "ownership": {
+    "agent": "implementer",
+    "files": ["src/webhooks/webhook.controller.ts", "src/webhooks/retry.ts"],
+    "lease_expires": "2026-09-14T18:40:00Z"
+  },
+  "state": "verifying",
+  "timestamp": "2026-09-14T18:12:04Z",
+  "observations": ["controller currently swallows 5xx from the handler"],
+  "mutations": ["added backoff schedule to webhook.controller.ts"],
+  "verification": [
+    { "command": "pnpm test webhook.controller.spec.ts", "result": "8 passed" },
+    { "command": "pnpm lint src/webhooks", "result": "passed" }
+  ],
+  "approval_gates": {
+    "external_action": {
+      "destination": "production deployment",
+      "status": "waiting_for_approval",
+      "prepared": true
+    }
+  },
+  "open_risks": ["backoff ceiling not covered by a test"],
+  "next_action": "reviewer reads verification, then promotes state to done"
+}

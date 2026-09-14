@@ -1,0 +1,9 @@
+{
+  "name": "coordination-contract-lint",
+  "form": "script",
+  "post_slug": "multi-agent-coordination-layer",
+  "post_url": "https://jyoung.dev/blog/multi-agent-coordination-layer/",
+  "post_title": "Coordination Is an Architecture Layer, Not a Prompt Instruction",
+  "description": "Validates a JSON handoff contract against the post's schema (state enum, objective, ownership, observations, mutations, verification, approval_gates) and enforces the done-state promotion guards, exiting non-zero on a malformed or incomplete contract so coordination logic is testable in CI instead of buried in a prompt",
+  "standalone": true
+}
