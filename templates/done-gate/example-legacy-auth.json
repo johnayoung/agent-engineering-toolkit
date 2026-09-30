@@ -1,0 +1,17 @@
+{
+  "task": "Migrate the three remaining callers of legacyAuth() to auth.Verify()",
+  "base": "origin/main",
+  "predicates": [
+    { "id": "no-callers", "kind": "grep_count",
+      "pattern": "legacyAuth\\(", "glob": "**/*.go", "exclude": "**/*_test.go", "max": 0 },
+    { "id": "legacy-deleted", "kind": "file_absent",
+      "path": "internal/auth/legacy.go" },
+    { "id": "suite", "kind": "test", "name": "auth and cmd packages",
+      "run": "go test ./internal/auth/... ./cmd/..." },
+    { "id": "fail-to-pass", "kind": "test", "name": "TestVerifyRejectsExpiredToken",
+      "run": "go test -tags done ./internal/auth -run '^TestVerifyRejectsExpiredToken$'" },
+    { "id": "tests-untouched", "kind": "unchanged_since", "ref": "origin/main",
+      "glob": "**/*_test.go", "except": ["internal/auth/legacy_test.go"] }
+  ],
+  "review": ["new call sites are idiomatic"]
+}

@@ -1,0 +1,9 @@
+{
+  "name": "done-gate",
+  "form": "script",
+  "post_slug": "agent-done-criteria-predicates",
+  "post_url": "https://jyoung.dev/blog/agent-done-criteria-predicates/",
+  "post_title": "Your Agent's \"Done\" Is a Self-Report. Make It a Predicate.",
+  "description": "Runs a .done/<task>.json predicate file (decompose-epic's command, test, file_exists, glob_count plus file_absent, grep_count and unchanged_since) against the repo's end state: --hook exits 2 with failing predicates on stderr for a Claude Code Stop or SubagentStop hook, --ci exits 1 with a summary for a required status check, and lint flags prose criteria and exit-code predicates with no unchanged_since guard on the tests",
+  "standalone": true
+}
