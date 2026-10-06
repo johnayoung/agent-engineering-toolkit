@@ -1,0 +1,9 @@
+{
+  "name": "eval-cadence",
+  "form": "script",
+  "post_slug": "standing-agent-eval-suite",
+  "post_url": "https://jyoung.dev/blog/standing-agent-eval-suite/",
+  "post_title": "Diff Review Can't See Your Agent Regress. A Standing Suite Can.",
+  "description": "Reads an evals.yaml manifest, prices one full run of each eval (cost x trials) against your daily budget, assigns per_change, nightly, pre_release, or harden_then_retire by cost, saturation, and stakes, fails on unowned, flaky, or mis-tiered evals, and emits the GitHub Actions trigger config plus a one-page suite charter",
+  "standalone": true
+}

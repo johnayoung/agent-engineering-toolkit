@@ -1,0 +1,42 @@
+suite_version: 2026.09.3
+evals:
+  - id: reg/handler-error-mapping-422
+    suite: regression
+    kind: code_assertion          # deterministic, no model call
+    cost_per_run_usd: 0.02
+    trials: 1
+    stakes: high
+    pass_rate_30d: 1.00
+    owner: payments-api
+    tier: per_change
+
+  - id: reg/repo-wide-agent-run
+    suite: regression
+    kind: agent_run               # full task, real repo, live model endpoint
+    cost_per_run_usd: 3.80
+    trials: 5
+    stakes: high
+    pass_rate_30d: 0.98
+    owner: eval-platform
+    tier: nightly                 # the run that catches CL-4
+
+  - id: cap/migrations/reversible-migration
+    suite: capability
+    kind: agent_run
+    cost_per_run_usd: 4.10
+    trials: 5
+    stakes: high
+    pass_rate_30d: 0.42
+    owner: data-platform
+    tier: nightly
+
+  - id: reg/pr-description-tone-judge
+    suite: regression
+    kind: llm_judge
+    cost_per_run_usd: 0.60
+    trials: 3
+    stakes: low
+    pass_rate_30d: 1.00
+    saturated: true               # harden first, then retire
+    owner: devex
+    tier: harden_then_retire
