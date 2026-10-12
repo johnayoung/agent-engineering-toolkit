@@ -1,0 +1,9 @@
+{
+  "name": "tool-contract-audit",
+  "form": "script",
+  "post_slug": "agent-tool-contracts",
+  "post_url": "https://jyoung.dev/blog/agent-tool-contracts/",
+  "post_title": "Agent Tool Design Belongs in Your Harness Audit, Not Prompt Tips",
+  "description": "Captures or reads an MCP server's tools/list output, flags write tools with no idempotency-key parameter, destination parameters (to, recipient, url, channel, account) left as free strings, and missing or contradictory annotations, then locks definitions plus the exact code pin and prints a labelled BREAKING/WIDENING/REVIEW diff on upgrade, marking the implementation change UNDETERMINED because a definition hash cannot see server code",
+  "standalone": true
+}

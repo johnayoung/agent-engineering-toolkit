@@ -1,0 +1,64 @@
+{
+  "tools": [
+    {
+      "name": "get_account",
+      "description": "Look up a billing account and its verified billing contact.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "account_id": { "type": "string", "pattern": "^acct_[a-z0-9]{12}$" }
+        },
+        "required": ["account_id"],
+        "additionalProperties": false
+      },
+      "annotations": { "readOnlyHint": true, "openWorldHint": false }
+    },
+    {
+      "name": "preview_email",
+      "description": "Render the full envelope for an invoice email and return a plan_id. Sends nothing.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "account_id": { "type": "string", "pattern": "^acct_[a-z0-9]{12}$" },
+          "invoice_id": { "type": "string", "pattern": "^INV-[0-9]+$" },
+          "to": { "type": "string", "pattern": "^[^@\\s]+@[^@\\s]+\\.[a-z]{2,}$", "maxLength": 254 }
+        },
+        "required": ["account_id", "invoice_id", "to"],
+        "additionalProperties": false
+      },
+      "annotations": { "readOnlyHint": true, "openWorldHint": false }
+    },
+    {
+      "name": "send_email",
+      "description": "Send exactly the previewed plan. Takes nothing but the plan_id from preview_email.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "plan_id": { "type": "string", "pattern": "^pln_[a-z0-9]{6}$" }
+        },
+        "required": ["plan_id"],
+        "additionalProperties": false
+      },
+      "annotations": { "readOnlyHint": false, "destructiveHint": true, "idempotentHint": false, "openWorldHint": true }
+    },
+    {
+      "name": "send_receipt",
+      "description": "Send a payment receipt to the account's verified billing contact.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "account_id": { "type": "string", "pattern": "^acct_[a-z0-9]{12}$" },
+          "payment_id": { "type": "string" },
+          "to": { "type": "string", "format": "email", "maxLength": 254 },
+          "idempotency_key": {
+            "type": "string",
+            "description": "sha256 of workflow_id, tool name, payment_id, and recipient. Same operation, same key."
+          }
+        },
+        "required": ["account_id", "payment_id", "to", "idempotency_key"],
+        "additionalProperties": false
+      },
+      "annotations": { "readOnlyHint": false, "destructiveHint": false, "openWorldHint": true }
+    }
+  ]
+}
