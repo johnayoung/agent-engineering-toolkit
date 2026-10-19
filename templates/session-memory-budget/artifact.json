@@ -1,0 +1,9 @@
+{
+  "name": "session-memory-budget",
+  "form": "script",
+  "post_slug": "claude-code-parallel-sessions-memory",
+  "post_url": "https://jyoung.dev/blog/claude-code-parallel-sessions-memory/",
+  "post_title": "Claude Code Memory Usage: How Many Sessions Fit on One Machine",
+  "description": "Walks every running claude process tree, reports per-session process count, RSS, PSS, MCP-child share and npm exec wrappers with duplicated servers flagged, optionally samples over time to capture each session's peak, and prints max parallel sessions for a given ceiling and headroom, auto-detecting the cgroup or WSL VM ceiling on Linux",
+  "standalone": true
+}
