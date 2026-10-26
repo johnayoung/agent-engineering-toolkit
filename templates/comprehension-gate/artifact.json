@@ -1,0 +1,9 @@
+{
+  "name": "comprehension-gate",
+  "form": "template",
+  "post_slug": "comprehension-debt-on-call-ownership",
+  "post_url": "https://jyoung.dev/blog/comprehension-debt-on-call-ownership/",
+  "post_title": "Comprehension Debt Is an On-Call Problem for Agent Code",
+  "description": "PR template block where a named owner on the paged rotation writes the contract, invariants (with what enforces them), failure modes, debug path, and regenerable parts before merge, a checker that fails an unowned or unfilled block, and a no-agent Wheel of Misfortune drill card whose missed items become comprehension-debt tickets",
+  "standalone": true
+}
