@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+# Stub claude for the loop.sh tests. It never calls a model.
+#
+# Per-call settings are space-separated lists indexed by call number; the last
+# word repeats for later calls ("3.00 0.50" means call 1 costs 3.00, every
+# later call 0.50).
+#
+#   STUB_STATE     required: dir for the call counter, argv and pid records
+#   STUB_COSTS     total_cost_usd per call; "null" emits null, "missing" omits it,
+#                  "str" emits a string (default 0.50)
+#   STUB_SUBTYPES  result subtype per call (default success)
+#   STUB_EXITS     exit code per call (default 0)
+#   STUB_SLEEPS    seconds to sleep before answering, per call (default 0)
+#   STUB_OUTPUTS   json | empty | malformed | truncated | array | twodocs (default json)
+#                  truncated prints half a result object, then SIGKILLs itself
+#   STUB_ACTION    bash file run before answering, as the "agent"; it gets CALL
+#   STUB_IGNORE_TERM=1  ignore SIGTERM, to model a call that will not stop
+set -u
+
+state="${STUB_STATE:?STUB_STATE must be set}"
+n=$(( $(cat "$state/calls" 2>/dev/null || echo 0) + 1 ))
+echo "$n" > "$state/calls"
+printf '%s\n' "$@" > "$state/args-$n"
+echo "$$" > "$state/pid-$n"
+
+pick() {
+  local -a words
+  read -r -a words <<< "$1"
+  if [ "$n" -le "${#words[@]}" ]; then echo "${words[$((n - 1))]}"; else echo "${words[-1]}"; fi
+}
+
+cost=$(pick "${STUB_COSTS:-0.50}")
+subtype=$(pick "${STUB_SUBTYPES:-success}")
+code=$(pick "${STUB_EXITS:-0}")
+nap=$(pick "${STUB_SLEEPS:-0}")
+output=$(pick "${STUB_OUTPUTS:-json}")
+
+[ "${STUB_IGNORE_TERM:-0}" = 1 ] && trap '' TERM
+
+if [ -n "${STUB_ACTION:-}" ]; then
+  CALL=$n bash "$STUB_ACTION" >> "$state/action-$n.log" 2>&1
+fi
+
+touch "$state/running-$n"
+# sleep in short steps so an ignored TERM does not end the nap early
+end=$(( $(date +%s) + ${nap%.*} ))
+while [ "$(date +%s)" -lt "$end" ]; do sleep 0.1; done
+
+case "$cost" in
+  missing) field='' ;;
+  null)    field='"total_cost_usd":null,' ;;
+  str)     field='"total_cost_usd":"lots",' ;;
+  *)       field="\"total_cost_usd\":$cost," ;;
+esac
+is_error=false
+[ "$code" -ne 0 ] && is_error=true
+json="{\"type\":\"result\",\"subtype\":\"$subtype\",\"is_error\":$is_error,${field}\"result\":\"stub call $n\"}"
+
+case "$output" in
+  json)      printf '%s\n' "$json" ;;
+  empty)     ;;
+  malformed) printf 'Error: something went wrong {"type":\n' ;;
+  truncated) printf '%s' "${json:0:$(( ${#json} / 2 ))}"; kill -KILL $$ ;;
+  array)     printf '[%s]\n' "$json" ;;
+  twodocs)   printf '{"type":"system","total_cost_usd":0.01}\n%s\n' "$json" ;;
+esac
+touch "$state/done-$n"
+exit "$code"

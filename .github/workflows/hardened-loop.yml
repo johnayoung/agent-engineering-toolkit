@@ -1,0 +1,20 @@
+name: hardened-loop
+
+on:
+  push:
+    paths:
+      - "templates/hardened-loop/**"
+      - ".github/workflows/hardened-loop.yml"
+  pull_request:
+    paths:
+      - "templates/hardened-loop/**"
+      - ".github/workflows/hardened-loop.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: shellcheck + bats (stub claude, no API calls)
+        run: templates/hardened-loop/test/check.sh
