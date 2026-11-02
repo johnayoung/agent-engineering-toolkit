@@ -1,0 +1,9 @@
+[
+  {
+    "category": "functional",
+    "description": "New chat button creates a fresh conversation",
+    "steps": ["Open the main interface", "Click New Chat", "Verify a new conversation is created"],
+    "passes": false,
+    "test": "/gate/tests/test_chat.py::test_new_chat_creates_conversation"
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "name": "hardened-loop",
+  "form": "script",
+  "post_slug": "loop-engineering-practical-guide",
+  "post_url": "https://jyoung.dev/blog/loop-engineering-practical-guide/",
+  "post_title": "Loop Engineering Examples: Harden One Loop, Control by Control",
+  "description": "A drop-in loop.sh for unattended claude -p runs with an iteration cap, per-call turn and budget caps, a cumulative spend ceiling, a features.json exit that only a read-only test gate can flip, a 3-strike unchanged-diff breaker, and a kill trap that writes the progress note; every exit names the control that fired",
+  "standalone": false
+}
