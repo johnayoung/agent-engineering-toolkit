@@ -8,16 +8,18 @@ A `loop.sh` for unattended `claude -p` runs. Every control is there because a de
 
 | File | What it is |
 |---|---|
-| `loop.sh` | The finished loop from the post, verbatim |
+| `loop.sh` | The finished loop from the post, plus the fixes in `TESTING.md` (the post's fence is pending the same diff) |
 | `run.sh` | `docker run` wrapper: non-root user, `--init` so `docker stop` reaches the trap, `../gate-tests` mounted read-only at `/gate/tests` |
 | `features.example.json` | The `features.json` shape: Anthropic's `category`, `description`, `steps`, `passes`, plus `test`, the protected test id the gate runs |
+| `test/` | bats suite, stub `claude`, vendored bats-core; see Tests |
+| `TESTING.md` | What the suite proves, hypotheses H1 to H5, defects fixed |
 
 ## Usage
 
 ```bash
 cp loop.sh run.sh /path/to/repo/
 # write PROMPT.md and features.json, keep the gate tests in ../gate-tests
-git add features.json PROMPT.md && git commit -m "loop setup"
+git add loop.sh run.sh features.json PROMPT.md && git commit -m "loop setup"
 SPEND_CEILING=5 MAX_ITERATIONS=5 LOOP_IMAGE=<image with claude, git, jq, pytest> ./run.sh
 tail -n 1 progress.txt     # the control that fired
 ```
@@ -31,10 +33,10 @@ Needs `claude`, `git`, `jq`, `timeout`, `awk`. Start from a clean tree: iteratio
 | `MAX_ITERATIONS` | 20 | Outer cap. 0 is refused, never unlimited |
 | `MAX_TURNS` | 40 | `--max-turns` per call (tool turns + 1 for the final response) |
 | `CALL_BUDGET` | 4.00 | `--max-budget-usd` per call |
-| `SPEND_CEILING` | 40.00 | Sum of `total_cost_usd` across the run, kept in `.loop/spend.log` |
-| `ITER_TIMEOUT` | 45m | Wall clock per call (`timeout`) |
+| `SPEND_CEILING` | 40.00 | Sum of `total_cost_usd` across the run, kept in the wrapper's memory; `.loop/spend.log` is the record. A call that reports no cost is charged `CALL_BUDGET` |
+| `ITER_TIMEOUT` | 45m | Wall clock per call (`timeout`, then `KILL` 5s later if the call ignores `TERM`) |
 | `NO_PROGRESS_LIMIT` | 3 | Consecutive iterations whose staged diff, excluding `progress.txt` and `features.json`, is empty |
-| `GATE_CMD` | `pytest -q` | Runs the `test` id of every feature marked passing; a failure restores `features.json` from HEAD |
+| `GATE_CMD` | `pytest -q` | Runs the `test` id of every feature marked passing; a failure restores `features.json` from the last loop checkpoint |
 | `PROMPT_FILE` | `PROMPT.md` | Prompt sent on every fresh call |
 
 The defaults are the post's starting numbers, not researched thresholds. Keep `SPEND_CEILING` below `MAX_ITERATIONS * CALL_BUDGET` so the ledger binds and the iteration cap is the backstop.
@@ -48,19 +50,32 @@ The defaults are the post's starting numbers, not researched thresholds. Keep `S
 | Diff unchanged N times in a row | `no-progress breaker (N unchanged diffs)` | 1 |
 | Ran out of iterations | `MAX_ITERATIONS (N)` | 1 |
 | SIGINT, SIGTERM, SIGHUP | note in `progress.txt`, partial work committed as `loop: iteration N interrupted` | 130 |
-| Missing binary, `MAX_ITERATIONS=0`, `features.json` not committed | `loop.sh: ...` | 2 |
+| Missing binary, `MAX_ITERATIONS=0`, `features.json` not committed, a feature without a `test` id | `loop.sh: ...` | 2 |
 
-Not exits, but logged to `progress.txt` and the loop continues: a nonzero `claude` exit with its `subtype` (for example `error_max_turns`), an `ITER_TIMEOUT` hit, an edit to `features.json` beyond `.passes` (restored from HEAD), and a gate rejection (log in `.loop/logs/gate-N.log`).
+Not exits, but logged to `progress.txt` and the loop continues: a nonzero `claude` exit with its `subtype` (for example `error_max_turns`), an `ITER_TIMEOUT` hit, a call that reported no cost (charged `CALL_BUDGET`), an edit to `features.json` beyond `.passes` (restored from the last loop checkpoint), and a gate rejection (log in `.loop/logs/gate-N.log`).
+
+The checkpoint is the tree the wrapper last checked: `HEAD` at start, then each `loop: iteration N` commit. Commits the agent makes itself never move it, so an agent that commits its own flip still faces the gate.
 
 ## Read the output with these caveats
 
-- **Spend is an estimate.** `total_cost_usd` is a client-side estimate, and a session crash can zero it. The Usage page is the bill; `spend.log` is the brake.
-- **Spend overshoots.** `--max-budget-usd` is checked after each response, and the ceiling is checked after each call, so a run can pass both by up to one call's cost.
+- **Spend is an estimate.** `total_cost_usd` is a client-side estimate, and a session crash can zero it. The Usage page is the bill; the wrapper's sum is the brake. A call with no readable cost (timeout, crash, malformed output) is charged `CALL_BUDGET`, not zero.
+- **Spend overshoots.** `--max-budget-usd` is checked after each response, and the ceiling is checked after each call, so a run can pass both by up to one call's cost. The wrapper does not cap a single call; that bound is `claude`'s own.
 - **The gate is only as good as its tests.** Read-only tests stop test edits, not special-casing. Somebody still reads the diff.
 - **No `--resume`.** The ledger is a plain sum because every call is fresh. Resumed sessions report cumulative totals and would double-count.
 - **The breaker is a heuristic.** Keying it on the diff is the post's author's application of an offline stall definition, not a measured result.
 - `set -uo pipefail` omits `-e` on purpose: the loop branches on failures and must not die on the first one.
-- `GATE_CMD` and the test ids are word-split. Test ids cannot contain spaces. An empty `features.json` array counts as done.
+- `GATE_CMD` and the test ids are word-split, so the loop refuses a test id with spaces. An empty `features.json` array counts as done.
+- **The wrapper shares a user and a filesystem with the agent.** The agent can rewrite `PROMPT.md`, `loop.sh`, `.git/hooks` and `.loop/logs`, or leave a background process behind. `TESTING.md` (H5) lists what each one does.
+
+## Tests
+
+```bash
+test/check.sh                  # shellcheck, then all bats tests (about 35s, no API calls, no Docker)
+test/check.sh --filter H5      # one group; any bats flag passes through
+LOOP_SH=/path/to/loop.sh test/bats/bin/bats test/   # run the suite against another loop.sh
+```
+
+Needs `shellcheck`, `git`, `jq`, GNU `timeout` and `env` (coreutils 8.31+). bats-core 1.11.1 is vendored in `test/bats`. A stub `claude` in `test/stub` stands in for the CLI; `setup` refuses to run if any other `claude` resolves first. Each test builds a fresh temp git repo and a `chmod a-w` gate dir, and deletes both after.
 
 ## Grounding
 
