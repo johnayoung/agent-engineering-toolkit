@@ -54,7 +54,7 @@ load helpers
   export MAX_ITERATIONS=1 STUB_OUTPUTS=twodocs STUB_COSTS=2.00
   run_loop
   assert_stop "MAX_ITERATIONS (1)" 1 1 2.00
-  [ "$(cat "$REPO/.loop/spend.log")" = "$(printf '1\t2')" ]
+  [ "$(awk -F'\t' '{ print $1, $2 + 0 }' "$REPO/.loop/spend.log")" = "1 2" ]
 }
 
 # --- signals

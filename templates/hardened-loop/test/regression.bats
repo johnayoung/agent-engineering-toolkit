@@ -30,7 +30,8 @@ load helpers
   run_loop
   assert_stop "SPEND_CEILING (\$10)" 1 3 10.50
   [ "$(wc -l < "$REPO/.loop/spend.log")" -eq 3 ]
-  [ "$(cut -f2 "$REPO/.loop/spend.log" | paste -sd' ')" = "3.5 3.5 3.5" ]
+  # compare as numbers: jq 1.6 prints 3.5, jq 1.7 keeps the literal 3.50
+  [ "$(awk -F'\t' '{ printf "%s ", $2 + 0 }' "$REPO/.loop/spend.log")" = "3.5 3.5 3.5 " ]
 }
 
 @test "R04 done: every feature passed the gate, exit 0" {
