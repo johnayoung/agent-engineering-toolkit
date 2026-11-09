@@ -1,0 +1,21 @@
+# Protected-paths manifest for harness-promotion-gate.sh: '<role> <glob>' per line.
+# Everything here is outside the editable surface. Enforce it with file permissions
+# or a supervisor check too; this gate only catches the diff after the fact.
+# '*' matches across '/'. A trailing '/' protects a directory prefix.
+
+# The six roles the post freezes (the script warns when one is missing)
+verifier      evals/scorer/
+eval-data     evals/
+budget        config/budget.*
+sandbox       config/sandbox.*
+model-config  config/model.*
+logs          runs/
+
+# The inputs the verifier reads (the post's protect-the-inputs table)
+tracer        src/tracer/
+test-deps     vendor/
+
+# The gate itself, its inputs, and the rollback path
+gate          .harness-gate/
+gate          .github/workflows/harness-gate.yml
+rollback      scripts/rollback.sh

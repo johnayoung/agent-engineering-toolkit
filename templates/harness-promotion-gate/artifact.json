@@ -1,0 +1,9 @@
+{
+  "name": "harness-promotion-gate",
+  "form": "script",
+  "post_slug": "self-improving-software-factory",
+  "post_url": "https://jyoung.dev/blog/self-improving-software-factory/",
+  "post_title": "Self-Improving AI Software Factory: Govern the Harness Loop",
+  "description": "Gates a self-improving loop's candidate harness change: rejects any diff touching a protected-paths manifest (verifier, eval data, budget, sandbox, model config, logs), applies the Self-Harness rule of improving one split and degrading neither, requires every cited failure episode to be oracle-confirmed, runs score-blind vetoes, and prints PROMOTE, REJECT or FALLBACK with the evidence a named approver reads",
+  "standalone": true
+}
