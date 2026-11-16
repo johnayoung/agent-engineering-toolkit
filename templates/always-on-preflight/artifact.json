@@ -1,0 +1,9 @@
+{
+  "name": "always-on-preflight",
+  "form": "script",
+  "post_slug": "always-on-agents",
+  "post_url": "https://jyoung.dev/blog/always-on-agents/",
+  "post_title": "Always-On Agents: What Breaks When Nobody Is in the Session",
+  "description": "Static preflight for a coding agent that runs on GitHub Actions schedule or repo events (plus Claude scheduled-deployment frontmatter): flags a missing or per-run concurrency group, no dedup key on write-capable event triggers, cron inside the 1-3 AM local DST window, stored model keys where OIDC would do, stored GitHub tokens, last cron editor credited for scheduled runs, and alerting the agent's identity can reach, then prints the post's standing-agent table filled in, with a checklist for the rows no static read can answer",
+  "standalone": true
+}
