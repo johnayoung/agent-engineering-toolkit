@@ -1,0 +1,9 @@
+{
+  "name": "sandbox-substrate-picker",
+  "form": "calculator",
+  "post_slug": "sandbox-parallel-coding-agents",
+  "post_url": "https://jyoung.dev/blog/sandbox-parallel-coding-agents/",
+  "post_title": "A Sandbox for AI Coding Agents at Scale Is a Warm-State Problem",
+  "description": "Walks a parallel coding-agent fleet through the post's six-question route to a sandbox rung, then prices one session-hour and the whole run per vendor plan from a dated rates file and flags every plan whose concurrency cap or session-length limit binds; a companion script times clone, install and warm build for the setup input",
+  "standalone": true
+}

@@ -1,0 +1,115 @@
+{
+  "fetched": "2026-11-23",
+  "currency": "USD",
+  "note": "Published list rates, read from each provider's first-party pricing and limits pages on the fetch date. Excludes disk, plan fees, included allowances and credits, data transfer, Cloudflare Workers and Durable Objects charges, AWS snapshot read, write and storage charges, and Modal region multipliers. Recheck before you commit; copy this file, edit it, and pass it with --rates to use your own.",
+  "vendors": [
+    {
+      "name": "E2B",
+      "sources": ["https://e2b.dev/pricing"],
+      "cpu_unit": "vcpu",
+      "vcpu_per_unit": 1,
+      "cpu_rate": 0.000014,
+      "mem_rate": 0.0000045,
+      "rate_period": "second",
+      "min_units": 0,
+      "min_gib": 0,
+      "cpu_billing": "running",
+      "mem_billing": "running",
+      "cap_kind": "sessions",
+      "instance_max_vcpu": null,
+      "instance_max_gib": null,
+      "cap_note": "",
+      "plans": [
+        {"name": "Hobby",      "fee": "free, $100 one-time credit",        "max_sessions": 10,   "max_session_hours": 1},
+        {"name": "Pro",        "fee": "$150/month",                        "max_sessions": 100,  "max_session_hours": 24},
+        {"name": "Pro+",       "fee": "$150/month plus $500/month",        "max_sessions": 600,  "max_session_hours": 24},
+        {"name": "Pro++",      "fee": "$150/month plus $1,000/month",      "max_sessions": 1100, "max_session_hours": 24},
+        {"name": "Enterprise", "fee": "from $2,000/month commit",          "max_sessions": 500,  "max_session_hours": null}
+      ]
+    },
+    {
+      "name": "Daytona",
+      "sources": ["https://www.daytona.io/pricing", "https://www.daytona.io/docs/en/limits/"],
+      "cpu_unit": "vcpu",
+      "vcpu_per_unit": 1,
+      "cpu_rate": 0.0504,
+      "mem_rate": 0.0162,
+      "rate_period": "hour",
+      "min_units": 0,
+      "min_gib": 0,
+      "cpu_billing": "running",
+      "mem_billing": "running",
+      "cap_kind": "pool",
+      "instance_max_vcpu": null,
+      "instance_max_gib": null,
+      "cap_note": "Pooled quota: resources are shared across all running sandboxes. The Tiers section lists Tier 1 memory as 10 GiB while the Limits table says 20 GiB; this file uses the Limits table.",
+      "plans": [
+        {"name": "Tier 1", "fee": "email verified, $200 free compute", "pool_vcpu": 10,  "pool_gib": 20},
+        {"name": "Tier 2", "fee": "card linked, $25 top-up",           "pool_vcpu": 100, "pool_gib": 200},
+        {"name": "Tier 3", "fee": "$500 top-up",                       "pool_vcpu": 250, "pool_gib": 500},
+        {"name": "Tier 4", "fee": "$2,000 top-up every 30 days",       "pool_vcpu": 500, "pool_gib": 1000}
+      ]
+    },
+    {
+      "name": "Cloudflare",
+      "sources": ["https://developers.cloudflare.com/sandbox/platform/pricing/", "https://developers.cloudflare.com/containers/pricing/", "https://developers.cloudflare.com/containers/platform-details/limits/"],
+      "cpu_unit": "vcpu",
+      "vcpu_per_unit": 1,
+      "cpu_rate": 0.000020,
+      "mem_rate": 0.0000025,
+      "rate_period": "second",
+      "min_units": 0,
+      "min_gib": 0,
+      "cpu_billing": "active",
+      "mem_billing": "running",
+      "cap_kind": "pool",
+      "instance_max_vcpu": 4,
+      "instance_max_gib": 12,
+      "cap_note": "Account-wide defaults that can be increased. Memory bills on the provisioned instance type you select, so round your size up to a real instance type.",
+      "plans": [
+        {"name": "Workers Paid", "fee": "$5/month Workers Paid plan", "pool_vcpu": 15000, "pool_gib": 61440}
+      ]
+    },
+    {
+      "name": "Modal",
+      "sources": ["https://modal.com/pricing"],
+      "cpu_unit": "core",
+      "vcpu_per_unit": 2,
+      "cpu_rate": 0.00003942,
+      "mem_rate": 0.00000667,
+      "rate_period": "second",
+      "min_units": 0.125,
+      "min_gib": 0.125,
+      "cpu_billing": "running",
+      "mem_billing": "running",
+      "cap_kind": "sessions",
+      "instance_max_vcpu": null,
+      "instance_max_gib": null,
+      "cap_note": "Sandbox rates are 3x list (non-preemptible); 1 physical core = 2 vCPU. The container cap counts all your containers, not only sandboxes.",
+      "plans": [
+        {"name": "Starter", "fee": "$0/month, $30/month credits",            "max_sessions": 100,  "max_session_hours": null},
+        {"name": "Team",    "fee": "$250/month, $100/month credits",         "max_sessions": 5000, "max_session_hours": null}
+      ]
+    },
+    {
+      "name": "AWS Lambda MicroVMs",
+      "sources": ["https://aws.amazon.com/lambda/pricing/", "https://docs.aws.amazon.com/lambda/latest/dg/microvms-launching.html"],
+      "cpu_unit": "vcpu",
+      "vcpu_per_unit": 1,
+      "cpu_rate": 0.0000276944,
+      "mem_rate": 0.0000036667,
+      "rate_period": "second",
+      "min_units": 0,
+      "min_gib": 0,
+      "cpu_billing": "running",
+      "mem_billing": "running",
+      "cap_kind": "unpublished",
+      "instance_max_vcpu": null,
+      "instance_max_gib": null,
+      "cap_note": "Unit prices as used in AWS's own worked examples (US East N. Virginia, Graviton), per GB not GiB. Snapshot read, write and storage are billed separately and not modeled. Concurrency is an account memory quota per Region with no published default; check Service Quotas. AWS prices its coding-assistant example at $12.41 per developer-month.",
+      "plans": [
+        {"name": "On-demand", "fee": "none", "max_sessions": null, "max_session_hours": null}
+      ]
+    }
+  ]
+}
